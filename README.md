@@ -82,10 +82,7 @@ Um desafio chave foi garantir que o mecanismo de correspondência de palavras fo
 
 ---
 
-## 📊 Demonstração e Funcionalidades
-
-Você pode interagir com o Pratice Vocabulary diretamente clicando [aqui para experimentar](/vocabulary.html).
-As principais funcionalidades incluem:
+## 📊 Funcionalidades
 
 * **Listagem de Vocabulário**: Visualização paginada das palavras e suas traduções **(da lista definida para reforço)**.
 * **Modo de Prática (Match the Words)**:
