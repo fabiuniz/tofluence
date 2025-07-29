@@ -1,8 +1,17 @@
+<!-- 
+  Tags: Skils
+  Label: 🗣️ Pratice Vocabulary
+  Description: Pratice Vocabulary - Ferramenta de Potencialização de Vocabulário Inglês
+  path_hook: hookfigma.hook17
+-->
+
 ---
 
 # 🚀 Projeto: Pratice Vocabulary - Ferramenta de Potencialização de Vocabulário
 
 ---
+
+![Screenshot](images/fluencyforge.png)
 
 ## Visão Geral
 
@@ -75,7 +84,7 @@ Um desafio chave foi garantir que o mecanismo de correspondência de palavras fo
 
 ## 📊 Demonstração e Funcionalidades
 
-Você pode interagir com o Pratice Vocabulary diretamente clicando [aqui para a demonstração ao vivo](vocabulary.html).
+Você pode interagir com o Pratice Vocabulary diretamente clicando [aqui para experimentar](/vocabulary.html).
 As principais funcionalidades incluem:
 
 * **Listagem de Vocabulário**: Visualização paginada das palavras e suas traduções **(da lista definida para reforço)**.
