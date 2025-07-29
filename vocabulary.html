@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice Vocabulary - Aprendizado Resiliente</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-green: #58cc02;
+            --dark-green: #58a700;
+            --light-green: #7acc02;
+            --success-color: #4CAF50;
+            --error-color: #ff4d4d;
+            --warning-color: #ff9800;
+            --info-color: #2196F3;
+            --bg-light: #f0f2f5;
+            --text-primary: #333;
+            --text-secondary: #666;
+            --text-light: #777;
+            --border-light: #e0e0e0;
+            --shadow: 0 2px 4px rgba(0,0,0,0.1);
+            --shadow-hover: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f0f2f5 0%, #e8f4f8 100%);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+
+        .container {
+            display: flex;
+            gap: 20px;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .left-panel {
+            flex: 1;
+            max-width: 320px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            padding: 20px;
+            position: sticky;
+            top: 20px;
+            height: fit-content;
+        }
+
+        .right-panel {
+            flex: 3;
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            color: var(--primary-green);
+            margin-bottom: 8px;
+            font-size: 2.2em;
+            font-weight: bold;
+            text-shadow: 0 2px 4px rgba(88, 204, 2, 0.2);
+        }
+
+        .header p {
+            color: var(--text-light);
+            font-size: 0.9em;
+            margin: 3px 0;
+        }
+
+        .streak-counter {
+            background: linear-gradient(135deg, #ff6b6b, #ffa500);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: bold;
+            margin: 10px 0;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(255, 107, 107, 0.3);
+        }
+
+        .missions {
+            margin-bottom: 25px;
+        }
+
+        .missions h2 {
+            font-size: 1.2em;
+            color: var(--text-primary);
+            margin-bottom: 15px;
+            border-bottom: 2px solid var(--border-light);
+            padding-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .mission-icon {
+            font-size: 1.3em;
+        }
+
+        .mission-item {
+            margin-bottom: 15px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-green);
+        }
+
+        .mission-item p {
+            margin: 0;
+            font-size: 0.9em;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .progress-bar {
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            height: 12px;
+            margin-top: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-green), var(--light-green));
+            width: 0;
+            border-radius: 10px;
+            transition: width 0.5s ease-out;
+        }
+
+        .vocabulary-card {
+            background: #f9f9f9;
+            border: 1px solid var(--border-light);
+            border-radius: 10px;
+            padding: 12px 90px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .vocabulary-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .vocabulary-card .word {
+            font-weight: bold;
+            font-size: 1.1em;
+            color: var(--text-primary);
+        }
+
+        .vocabulary-card .translations {
+            color: var(--text-secondary);
+            font-size: 0.9em;
+            text-align: right;
+            flex-grow: 1;
+            margin-left: 15px;
+        }
+
+        .practice-button {
+            display: block;
+            width: 100%;
+            padding: 14px 20px;
+            background-color: var(--primary-green);
+            color: white;
+            border: none;
+            border-bottom: 5px solid var(--dark-green);
+            border-radius: 10px;
+            font-size: 1.15em;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+            margin-top: 25px;
+            box-shadow: var(--shadow);
+        }
+
+        .practice-button:hover {
+            background-color: var(--light-green);
+            transform: translateY(-2px);
+            border-bottom-width: 3px;
+        }
+
+        .practice-button:active {
+            transform: translateY(2px);
+            border-bottom-width: 0;
+        }
+
+        .practice-stats {
+            margin-top: 15px;
+            font-size: 0.9em;
+            color: var(--text-secondary);
+            text-align: center;
+        }
+
+        .more-button {
+            display: block;
+            width: fit-content;
+            margin: 20px auto 0;
+            padding: 10px 20px;
+            background-color: var(--info-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.95em;
+            font-weight: 500;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+            box-shadow: var(--shadow);
+        }
+
+        .more-button:hover {
+            background-color: #0056b3;
+            transform: translateY(-1px);
+        }
+
+        .more-button:active {
+            transform: translateY(1px);
+        }
+
+        /* Styles for the test */
+        .test-container {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 25px;
+            min-height: 350px;
+            align-items: flex-start;
+            gap: 15px;
+        }
+        .test-container_sub{
+            flex-direction: column;
+        }
+
+        .word-column {
+            flex-basis: 48%;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .word-button {
+            background-color: #eef1f4;
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            padding: 12px 90px;
+            font-size: 1.1em;
+            cursor: pointer;
+            text-align: center;
+            transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.1s ease;
+            word-wrap: break-word;
+            box-shadow: var(--shadow);
+            color: var(--text-primary);
+        }
+
+        .word-button:hover {
+            background-color: #e0e4e8;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .word-button.selected {
+            background-color: var(--primary-green);
+            border-color: var(--dark-green);
+            color: white;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px rgba(88, 204, 2, 0.3);
+        }
+
+        .word-button.correct {
+            border-color: var(--success-color);
+            color: white;
+            cursor: default;
+            transition: background-color 0.5s ease-out, opacity 1s ease-out; /* Smooth transition for color */
+        }
+
+        .word-button.incorrect {
+            background-color: var(--error-color);
+            border-color: #cc0000;
+            color: white;
+            animation: shake 0.3s ease-in-out;
+        }
+
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-5px); }
+            100% { transform: translateX(0); }
+        }
+
+        .word-button.matched {
+            opacity: 0.1; /* Fully transparent for "matched" */
+            transition: opacity 1s ease-out, background-color 1s ease-out, transform 1s ease-out;
+            pointer-events: none; /* Disable clicks on matched items */
+        }
+
+        .test-controls {
+            margin-top: 25px;
+            text-align: center;
+        }
+
+        #test-feedback {
+            font-size: 1.1em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            min-height: 20px; /* Ensures space even when empty */
+        }
+
+        .test-controls button {
+            padding: 12px 25px;
+            background-color: var(--info-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            margin: 5px;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+            box-shadow: var(--shadow);
+        }
+
+        .test-controls button:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        .test-controls button:active {
+            transform: translateY(1px);
+        }
+
+        .test-results {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            background: #e6ffe6;
+            border: 2px solid var(--success-color);
+            border-radius: 10px;
+            color: var(--success-color);
+        }
+
+        .test-results h3 {
+            color: var(--dark-green);
+            margin-top: 0;
+            font-size: 1.4em;
+        }
+
+        .test-results p {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* --- Media Queries for Responsiveness (Two-Column Layout) --- */
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            .container {
+                flex-direction: column; /* Stack columns on smaller screens */
+                gap: 20px;
+            }
+            .left-panel {
+                max-width: 100%; /* Take full width */
+                position: static; /* Remove sticky behavior */
+                height: auto;
+            }
+            .right-panel {
+                max-width: 100%; /* Take full width */
+            }
+            .header h1 {
+                font-size: 2em;
+            }
+            .header p {
+                font-size: 0.85em;
+            }
+            .missions h2 {
+                font-size: 1.1em;
+            }
+            .mission-item p {
+                font-size: 0.85em;
+            }
+            .vocabulary-card {
+                padding: 10px 15px;
+            }
+            .vocabulary-card .word {
+                font-size: 1em;
+            }
+            .vocabulary-card .translations {
+                font-size: 0.8em;
+                margin-left: 10px;
+            }
+            .practice-button {
+                padding: 12px 15px;
+                font-size: 1.05em;
+            }
+            .practice-stats {
+                font-size: 0.85em;
+            }
+            .more-button {
+                padding: 8px 15px;
+                font-size: 0.9em;
+            }
+            .test-container {
+                flex-direction: row; /* Keep two columns in test section even on mobile */
+                gap: 10px;
+                min-height: 300px;
+            }
+            .word-button {
+                font-size: 0.95em;
+                padding: 10px 12px;
+            }
+            .test-controls button {
+                padding: 10px 18px;
+                font-size: 0.9em;
+            }
+            .test-results {
+                padding: 15px;
+            }
+            .test-results h3 {
+                font-size: 1.2em;
+            }
+            .test-results p {
+                font-size: 1em;
+            }
+        }
+
+        /* Adjustments for very small screens, maintaining 2 columns in test */
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            .container {
+                gap: 15px;
+            }
+            .left-panel, .right-panel {
+                padding: 15px;
+            }
+            .header h1 {
+                font-size: 1.8em;
+            }
+            .header p {
+                font-size: 0.8em;
+            }
+            .missions h2 {
+                font-size: 1em;
+            }
+            .mission-item {
+                padding: 8px;
+            }
+            .mission-item p {
+                font-size: 0.8em;
+            }
+            .vocabulary-card {
+                padding: 8px 12px;
+            }
+            .vocabulary-card .word {
+                font-size: 0.9em;
+            }
+            .vocabulary-card .translations {
+                font-size: 0.75em;
+            }
+            .practice-button {
+                font-size: 1em;
+                padding: 10px 12px;
+            }
+            .practice-stats {
+                font-size: 0.8em;
+            }
+            .more-button {
+                font-size: 0.85em;
+                padding: 7px 12px;
+            }
+            .test-container {
+                gap: 8px;
+                min-height: 250px;
+            }
+            .word-button {
+                font-size: 0.85em;
+                padding: 5px 37px;
+            }
+            .test-controls button {
+                padding: 8px 15px;
+                font-size: 0.85em;
+                margin: 3px;
+            }
+            #test-feedback {
+                font-size: 1em;
+            }
+        }
+    </style>
+    <script src="vocabulary.js"></script>
+</head>
+<body>
+
+    <div class="container">
+        <div class="left-panel">
+            <div class="header">
+                <h1>FluencyForge</h1>
+                <p id="assertiveness-display">Assertividade: --%</p>
+                <p id="total-words-display-header">Total de Palavras: --</p>
+                <div class="streak-counter">🔥 Streak</div>
+            </div>
+
+            <div class="missions">
+                <h2><i class="fas fa-list-check mission-icon"></i> Progresso do Teste</h2>
+                <div class="mission-item">
+                    <p id="test-progress-text">0 / 0 Palavras Concluídas</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="test-progress-bar"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="right-panel">
+            <div class="vocabulary-section" id="vocabulary-section">
+                <h2>Practice</h2>
+                <a href="#" class="practice-button" id="start-test-button">Practice your English vocabulary</a>
+                <p class="practice-stats" id="vocabulary-list-total-words">Total de Palavras: 2675</p>
+                <p class="practice-stats">Most recent</p>
+
+                <div id="vocabulary-list">
+                </div>
+                <button class="more-button" id="load-more">See more</button>
+            </div>
+
+            <div class="test-section hidden" id="test-section">
+                <h2>Match the words</h2>
+                <div class="test-container">
+                    <div class="test-container_sub">
+                        <div class="word-column" id="english-words-column">
+                        </div>
+                        <div class="test-controls">
+                            <p id="test-feedback"></p>
+                            <button id="next-set-button" class="hidden">Próximo Conjunto</button>
+                            <div id="test-completion-message" class="hidden test-results">
+                                <h3>Parabéns! Você concluiu o teste de vocabulário!</h3>
+                                <p>Você associou todas as palavras.</p>
+                                <button id="restart-test-button">Reiniciar Teste</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="word-column" id="portuguese-translations-column">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // O objeto vocabularyData agora vem do arquivo vocabulary.js
+        // const vocabularyData = { ... }; (Não precisamos mais defini-lo aqui)
+
+        const vocabularyList = document.getElementById('vocabulary-list');
+        const loadMoreButton = document.getElementById('load-more');
+        let currentVocabularyListIndex = 0;
+        const wordsPerLoad = 10;
+
+        const totalWordsDisplayHeader = document.getElementById('total-words-display-header');
+        const vocabularyListTotalWords = document.getElementById('vocabulary-list-total-words');
+
+        // Função para gerar uma cor hexadecimal aleatória
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        function renderVocabularyCards() {
+            // Garante que vocabularyData esteja disponível antes de tentar acessá-lo
+            if (typeof vocabularyData === 'undefined' || !vocabularyData.words) {
+                console.error("vocabularyData não está carregado ou está vazio.");
+                return;
+            }
+
+            const wordsToLoad = vocabularyData.words.slice(currentVocabularyListIndex, currentVocabularyListIndex + wordsPerLoad);
+
+            if (wordsToLoad.length === 0) {
+                loadMoreButton.style.display = 'none';
+                return;
+            }
+
+            wordsToLoad.forEach(item => {
+                const card = document.createElement('div');
+                card.classList.add('vocabulary-card');
+
+                const wordSpan = document.createElement('span');
+                wordSpan.classList.add('word');
+                wordSpan.textContent = item.word;
+                card.appendChild(wordSpan);
+
+                const translationsSpan = document.createElement('span');
+                translationsSpan.classList.add('translations');
+                translationsSpan.textContent = item.translations.join(', ');
+                card.appendChild(translationsSpan);
+
+                vocabularyList.appendChild(card);
+            });
+
+            currentVocabularyListIndex += wordsPerLoad;
+
+            if (currentVocabularyListIndex >= vocabularyData.words.length) {
+                loadMoreButton.style.display = 'none';
+            }
+        }
+
+        // --- Test Functionality ---
+        const startTestButton = document.getElementById('start-test-button');
+        const vocabularySection = document.getElementById('vocabulary-section');
+        const testSection = document.getElementById('test-section');
+        const englishWordsColumn = document.getElementById('english-words-column');
+        const portugueseTranslationsColumn = document.getElementById('portuguese-translations-column');
+        const testFeedback = document.getElementById('test-feedback');
+        const nextSetButton = document.getElementById('next-set-button');
+        const testCompletionMessage = document.getElementById('test-completion-message');
+        const restartTestButton = document.getElementById('restart-test-button');
+        const testProgressBar = document.getElementById('test-progress-bar');
+        const testProgressText = document.getElementById('test-progress-text');
+        const assertivenessDisplay = document.getElementById('assertiveness-display');
+
+
+        let allWordsForTest = [];
+        let currentSetStartIndex = 0;
+        const wordsPerTestSet = 5;
+
+        let selectedEnglishWordButton = null;
+        let selectedPortugueseTranslationButton = null;
+        // Use um Set para rastrear as palavras em inglês já correspondidas neste conjunto
+        let matchedEnglishWordsInCurrentSet = new Set();
+        let totalWordsCompleted = 0;
+
+        let totalAttempts = 0;
+        let correctAttempts = 0;
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function updateProgressBar() {
+            const totalWordsInTest = allWordsForTest.length;
+            const progressPercentage = (totalWordsCompleted / totalWordsInTest) * 100;
+            testProgressBar.style.width = `${progressPercentage}%`;
+            testProgressText.textContent = `${totalWordsCompleted} / ${totalWordsInTest} Palavras Concluídas`;
+        }
+
+        function updateAssertivenessDisplay() {
+            if (totalAttempts > 0) {
+                const assertivenessPercentage = (correctAttempts / totalAttempts) * 100;
+                assertivenessDisplay.textContent = `Assertividade: ${assertivenessPercentage.toFixed(0)}%`;
+            } else {
+                assertivenessDisplay.textContent = `Assertividade: --%`;
+            }
+        }
+
+        function updateStudyBaseCounts() {
+            // Garante que vocabularyData esteja disponível antes de tentar acessá-lo
+            if (typeof vocabularyData === 'undefined' || !vocabularyData.words) {
+                console.error("vocabularyData não está carregado ou está vazio.");
+                return;
+            }
+            const totalWords = vocabularyData.words.length;
+            totalWordsDisplayHeader.textContent = `Total de Palavras: ${totalWords}`;
+            vocabularyListTotalWords.textContent = `Total de Palavras: ${totalWords}`;
+        }
+
+        function startTest() {
+            vocabularySection.classList.add('hidden');
+            testSection.classList.remove('hidden');
+            testCompletionMessage.classList.add('hidden');
+            testFeedback.textContent = '';
+            nextSetButton.classList.add('hidden');
+
+            // Reset test state and assertiveness counters
+            allWordsForTest = shuffleArray([...vocabularyData.words]);
+            currentSetStartIndex = 0;
+            totalWordsCompleted = 0;
+            totalAttempts = 0;
+            correctAttempts = 0;
+            
+            updateProgressBar();
+            updateAssertivenessDisplay();
+
+            loadNextSet();
+        }
+
+        function loadNextSet() {
+            englishWordsColumn.innerHTML = '';
+            portugueseTranslationsColumn.innerHTML = '';
+            testFeedback.textContent = '';
+            nextSetButton.classList.add('hidden');
+            matchedEnglishWordsInCurrentSet.clear(); // Limpa o Set de palavras correspondidas
+            selectedEnglishWordButton = null;
+            selectedPortugueseTranslationButton = null;
+
+            const currentSetWords = allWordsForTest.slice(currentSetStartIndex, currentSetStartIndex + wordsPerTestSet);
+
+            if (currentSetWords.length === 0) {
+                // All words have been tested
+                testCompletionMessage.classList.remove('hidden');
+                updateProgressBar(); // Final update to show 100%
+                return;
+            }
+
+            // Create an array to hold all possible translation buttons for this set,
+            // mapping each translation back to its *original* English word.
+            const allTranslationsForSet = [];
+            currentSetWords.forEach(wordObj => {
+                wordObj.translations.forEach(translation => {
+                    allTranslationsForSet.push({
+                        text: translation,
+                        correctEnglishWord: wordObj.word
+                    });
+                });
+            });
+
+            // Shuffle the English words and the combined translations
+            const englishWordsDisplay = shuffleArray([...currentSetWords]);
+            const portugueseTranslationsDisplay = shuffleArray(allTranslationsForSet);
+
+
+            // Create buttons for English words
+            englishWordsDisplay.forEach(item => {
+                const button = document.createElement('button');
+                button.classList.add('word-button', 'english-word');
+                button.textContent = item.word;
+                button.dataset.originalWord = item.word; // Store the original English word
+                button.addEventListener('click', () => selectWord(button, 'english'));
+                englishWordsColumn.appendChild(button);
+            });
+
+            // Create buttons for Portuguese translations
+            portugueseTranslationsDisplay.forEach(item => {
+                const button = document.createElement('button');
+                button.classList.add('word-button', 'portuguese-translation');
+                button.textContent = item.text; // Display the translation text
+                // Crucially, store the *correct English word* that this translation belongs to.
+                button.dataset.correctEnglishWord = item.correctEnglishWord;
+                button.addEventListener('click', () => selectWord(button, 'portuguese'));
+                portugueseTranslationsColumn.appendChild(button);
+            });
+        }
+
+        function selectWord(button, type) {
+            // Se o botão já está marcado como 'correct' (já foi correspondido e "esmaecido"), não faz nada.
+            if (button.classList.contains('correct') || button.classList.contains('matched')) {
+                return;
+            }
+
+            // Clear previous selections of the same type
+            if (type === 'english') {
+                if (selectedEnglishWordButton) {
+                    selectedEnglishWordButton.classList.remove('selected');
+                }
+                selectedEnglishWordButton = button;
+            } else {
+                if (selectedPortugueseTranslationButton) {
+                    selectedPortugueseTranslationButton.classList.remove('selected');
+                }
+                selectedPortugueseTranslationButton = button;
+            }
+
+            button.classList.add('selected');
+            testFeedback.textContent = ''; // Clear feedback when new selection is made
+
+            // Check for a match if both are selected
+            if (selectedEnglishWordButton && selectedPortugueseTranslationButton) {
+                checkMatch();
+            }
+        }
+
+        function checkMatch() {
+            // Retrieve the English word directly from its button's dataset
+            const englishWordText = selectedEnglishWordButton.dataset.originalWord;
+            // Retrieve the English word that the Portuguese translation button *should* match
+            const portugueseButtonMappedEnglishWord = selectedPortugueseTranslationButton.dataset.correctEnglishWord;
+
+            totalAttempts++; // Incrementa o contador de tentativas totais
+            
+            // The fix: Directly compare the English word selected with the English word that the Portuguese button is linked to.
+            // This ensures a direct, correct match even if multiple Portuguese translations are similar.
+            if (englishWordText === portugueseButtonMappedEnglishWord) {
+                correctAttempts++; // Incrementa o contador de tentativas corretas
+
+                testFeedback.textContent = 'Correto!';
+                testFeedback.style.color = 'var(--primary-green)';
+
+                // Marcar todos os botões relacionados à palavra em inglês correspondida
+                const randomMatchColor = getRandomColor();
+                const englishButtons = document.querySelectorAll(`.english-word[data-original-word="${englishWordText}"]`);
+                const portugueseButtons = document.querySelectorAll(`.portuguese-translation[data-correct-english-word="${englishWordText}"]`);
+
+                englishButtons.forEach(button => {
+                    button.classList.remove('selected');
+                    button.classList.add('correct');
+                    button.style.backgroundColor = randomMatchColor;
+                    // Keep event listener for now, will disable via 'matched' class pointer-events: none
+                });
+                portugueseButtons.forEach(button => {
+                    button.classList.remove('selected');
+                    button.classList.add('correct');
+                    button.style.backgroundColor = randomMatchColor;
+                    // Keep event listener for now, will disable via 'matched' class pointer-events: none
+                });
+
+                // Adiciona a palavra em inglês ao set de palavras correspondidas
+                if (!matchedEnglishWordsInCurrentSet.has(englishWordText)) {
+                    matchedEnglishWordsInCurrentSet.add(englishWordText);
+                    totalWordsCompleted++; // Incrementa para cada palavra *única* em inglês correspondida
+                }
+
+                // Limpa as seleções atuais
+                selectedEnglishWordButton = null;
+                selectedPortugueseTranslationButton = null;
+
+                updateProgressBar();
+                
+                // Aguarda um momento para a cor ser visível e depois esmaece
+                setTimeout(() => {
+                    englishButtons.forEach(button => {
+                        button.classList.add('matched');
+                        // Remove event listener after transition to fully disable clicks
+                        button.removeEventListener('click', () => selectWord(button, 'english'));
+                    });
+                    portugueseButtons.forEach(button => {
+                        button.classList.add('matched');
+                        // Remove event listener after transition to fully disable clicks
+                        button.removeEventListener('click', () => selectWord(button, 'portuguese'));
+                    });
+                    checkSetCompletion();
+                }, 500);    
+
+            } else {
+                // Incorrect match
+                selectedEnglishWordButton.classList.add('incorrect');
+                selectedPortugueseTranslationButton.classList.add('incorrect');
+                testFeedback.textContent = 'Incorreto. Tente novamente!';
+                testFeedback.style.color = 'var(--error-color)';
+
+                setTimeout(() => {
+                    selectedEnglishWordButton.classList.remove('selected', 'incorrect');
+                    selectedPortugueseTranslationButton.classList.remove('selected', 'incorrect');
+                    selectedEnglishWordButton = null;
+                    selectedPortugueseTranslationButton = null;
+                }, 700);
+            }
+            updateAssertivenessDisplay();
+        }
+
+        function checkSetCompletion() {
+            // Um conjunto é concluído quando todas as palavras em inglês do conjunto atual foram correspondidas
+            const currentSetEnglishWords = allWordsForTest.slice(currentSetStartIndex, currentSetStartIndex + wordsPerTestSet);
+            const currentSetUniqueEnglishWordsCount = new Set(currentSetEnglishWords.map(word => word.word)).size;
+
+            if (matchedEnglishWordsInCurrentSet.size === currentSetUniqueEnglishWordsCount) {
+                testFeedback.textContent = 'Conjunto Concluído!';
+                testFeedback.style.color = 'var(--info-color)';
+                nextSetButton.classList.remove('hidden');
+                // currentSetStartIndex is advanced when loading the next set, not here.
+                // This ensures if user clicks 'Next Set' it moves to the next batch.
+            }
+        }
+
+
+        // Event listeners
+        startTestButton.addEventListener('click', startTest);
+        loadMoreButton.addEventListener('click', renderVocabularyCards);
+        nextSetButton.addEventListener('click', loadNextSet);
+        restartTestButton.addEventListener('click', startTest);
+
+        // Chame as funções para exibir a assertividade e o total de palavras iniciais ao carregar a página
+        updateAssertivenessDisplay();
+        updateStudyBaseCounts();
+        renderVocabularyCards(); // Initial load for the vocabulary list view
+    </script>
+</body>
+</html>
